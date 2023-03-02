@@ -10,6 +10,7 @@ class QZCompanionGarminApp extends Application.AppBase {
 
     // onStart() is called on application start up
     function onStart(state as Dictionary?) as Void {
+
     }
 
     // onStop() is called when your application is exiting
@@ -20,7 +21,6 @@ class QZCompanionGarminApp extends Application.AppBase {
     function getInitialView() as Array<Views or InputDelegates>? {
         return [ new QZCompanionGarminView(), new QZCompanionGarminDelegate() ] as Array<Views or InputDelegates>;
     }
-
 }
 
 function getApp() as QZCompanionGarminApp {
