@@ -6,11 +6,23 @@ using Toybox.Timer;
 using Toybox.ActivityMonitor as Act;
 using Toybox.Activity as Acty;
 
+using Toybox.System;
+using Toybox.Lang;
+using Toybox.Time.Gregorian;
+using Toybox.Sensor;
+using Toybox.Application;
+using Toybox.Position;
+
+using Toybox.Communications;
+
+var log = new Log(LOG_LEVEL_VERBOSE);
 
 class QZCompanionGarminView extends WatchUi.View {
 
     hidden var timer;
-    private var HR;
+    private var _HR;
+    private var hr;
+    hidden var message = new Communications.PhoneAppMessage();
 
     function initialize() {
         View.initialize();
@@ -19,17 +31,53 @@ class QZCompanionGarminView extends WatchUi.View {
     // Load your resources here
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.MainLayout(dc));
-        HR = findDrawableById("HR");
+        _HR = findDrawableById("HR");
+    }
+
+    function phoneMessageCallback(_message as Toybox.Communications.Message) as Void {
+        $.log.info("Message received. Contents:");
+        message = _message.data;
+        $.log.info(message);
     }
 
     // Called when this View is brought to the foreground. Restore
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
+        Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE] );
+        Sensor.enableSensorEvents(method(:onSnsr));
+
         timer = new Timer.Timer();
 		timer.start(method(:tick), 1000, true);
-		//updateMessage();
-        //Comms.registerForPhoneAppMessages(method(:phoneMessageCallback));
+        Communications.registerForPhoneAppMessages(method(:phoneMessageCallback));
+    }
+
+    function updateMessage() as Void {
+        $.log.verbose("Updating message.");
+
+		// standard dictionary
+        var message = [
+            {
+                0 => hr,
+            },/*
+            {
+                MESSAGE_KEY_LATITUDE => 49.216426,
+                MESSAGE_KEY_LONGITUDE => 16.587749,
+                MESSAGE_KEY_MESSAGE => "Ayayayaaa"
+            }*/
+        ];
+        $.log.verbose("Transmitting message.");
+        Communications.transmit(message, null, new CommsRelay(method(:onTransmitComplete)));
+        $.log.verbose("Message transmitted.");
+    }
+
+    // If you're debugging a problem with connecting/transmitting message, consult `README.md`.
+    function onTransmitComplete(isSuccess) {
+        if (isSuccess) {
+            $.log.info("Message sent successfully.");
+        } else {
+            $.log.error("Message failed to send.");
+        }
     }
 
     // Update the view
@@ -44,24 +92,24 @@ class QZCompanionGarminView extends WatchUi.View {
     function onHide() as Void {
     }
 
-    function tick() as Void {
-        if (Act has :getHeartRateHistory) {
-            var heartRate = Activity.getActivityInfo().currentHeartRate;
-            if(heartRate==null) {
-                var HRH=Act.getHeartRateHistory(1, true);
-                var HRS=HRH.next();
-                if(HRS!=null && HRS.heartRate!= Act.INVALID_HR_SAMPLE){
-                    heartRate = HRS.heartRate;
-                }
-            }
-            if(heartRate!=null) {
-                heartRate = heartRate.toString();
-            } else{
-                heartRate = "--";
-            }
-            
-            HR.setText("HR: " + heartRate);
-            WatchUi.requestUpdate();
+    function onSnsr(sensor_info as Toybox.Sensor.Info) as Void {
+        var string_HR;
+        hr = sensor_info.heartRate;
+        if( sensor_info.heartRate != null )
+        {
+            string_HR = hr.toString() + "bpm";
         }
+        else
+        {
+            string_HR = "---bpm";
+        }
+
+        _HR.setText("HR: " + string_HR);
+
+        WatchUi.requestUpdate();
+    }
+
+    function tick() as Void {
+        updateMessage();
     }
 }
