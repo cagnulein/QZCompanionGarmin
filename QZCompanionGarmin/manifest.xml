@@ -5,7 +5,7 @@
         Use "Monkey C: Edit Application" from the Visual Studio Code command palette
         to update the application attributes.
     -->
-    <iq:application id="feec8674-2795-4e03-a283-0b69a0a291e3" type="watch-app" name="@Strings.AppName" entry="QZCompanionGarminApp" launcherIcon="@Drawables.LauncherIcon" minApiLevel="1.4.0">
+    <iq:application id="feec8674-2795-4e03-a283-0b69a0a291e3" type="watch-app" name="@Strings.AppName" entry="QZCompanionGarminApp" launcherIcon="@Drawables.LauncherIcon" minApiLevel="1.2.0">
         <!--
             Use the following from the Visual Studio Code comand palette to edit
             the build targets:
@@ -58,7 +58,6 @@
             <iq:product id="fr255m"/>
             <iq:product id="fr255s"/>
             <iq:product id="fr255sm"/>
-            <iq:product id="fr45"/>
             <iq:product id="fr55"/>
             <iq:product id="fr630"/>
             <iq:product id="fr645"/>
@@ -70,7 +69,6 @@
             <iq:product id="fr945"/>
             <iq:product id="fr945lte"/>
             <iq:product id="fr955"/>
-            <iq:product id="garminswim2"/>
             <iq:product id="instinct2"/>
             <iq:product id="instinct2s"/>
             <iq:product id="legacyherocaptainmarvel"/>
@@ -102,7 +100,6 @@
             <iq:product id="vivoactive4"/>
             <iq:product id="vivoactive4s"/>
             <iq:product id="vivoactive_hr"/>
-            <iq:product id="vivolife"/>
         </iq:products>
         <!--
             Use "Monkey C: Edit Permissions" from the Visual Studio Code command
