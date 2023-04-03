@@ -1,3 +1,8 @@
 <layout id="MainLayout">
     <label x="center" y="5" text="HR:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="HR" />
+    <!--label x="center" y="5" text="RES:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="RESISTANCE" />
+    <label x="center" y="5" text="P.RES:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="PELOTON_RESISTANCE" />
+    <label x="center" y="5" text="WATT:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="WATT" />
+    <label x="center" y="5" text="SPEED:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="SPEED" />
+    <label x="center" y="5" text="CADENCE:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="CADENCE" /-->
 </layout>
