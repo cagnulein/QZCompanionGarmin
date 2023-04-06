@@ -109,6 +109,7 @@
             <iq:uses-permission id="BluetoothLowEnergy"/>
             <iq:uses-permission id="Communications"/>
             <iq:uses-permission id="Sensor"/>
+            <iq:uses-permission id="Fit"/>
         </iq:permissions>
         <!--
             Use "Monkey C: Edit Languages" from the Visual Studio Code command
