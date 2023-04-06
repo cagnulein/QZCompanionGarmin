@@ -22,6 +22,8 @@ class QZCompanionGarminView extends WatchUi.View {
     hidden var timer;
     private var _HR;
     private var hr;
+    private var _FOOTCAD;
+    private var foot_cad;
     hidden var message = new Communications.PhoneAppMessage();
 
     function initialize() {
@@ -32,6 +34,7 @@ class QZCompanionGarminView extends WatchUi.View {
     function onLayout(dc as Dc) as Void {
         setLayout(Rez.Layouts.MainLayout(dc));
         _HR = findDrawableById("HR");
+        _FOOTCAD = findDrawableById("FOOTCAD");
     }
 
     function phoneMessageCallback(_message as Toybox.Communications.Message) as Void {
@@ -44,7 +47,7 @@ class QZCompanionGarminView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
-        Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE] );
+        Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
         Sensor.enableSensorEvents(method(:onSnsr));
 
         timer = new Timer.Timer();
@@ -59,12 +62,8 @@ class QZCompanionGarminView extends WatchUi.View {
         var message = [
             {
                 0 => hr,
-            },/*
-            {
-                MESSAGE_KEY_LATITUDE => 49.216426,
-                MESSAGE_KEY_LONGITUDE => 16.587749,
-                MESSAGE_KEY_MESSAGE => "Ayayayaaa"
-            }*/
+                1 => foot_cad,
+            },
         ];
         $.log.verbose("Transmitting message.");
         Communications.transmit(message, null, new CommsRelay(method(:onTransmitComplete)));
@@ -94,7 +93,9 @@ class QZCompanionGarminView extends WatchUi.View {
 
     function onSnsr(sensor_info as Toybox.Sensor.Info) as Void {
         var string_HR;
+        var string_FOOTCAD;
         hr = sensor_info.heartRate;
+        foot_cad = sensor_info.cadence;
         if( sensor_info.heartRate != null )
         {
             string_HR = hr.toString() + "bpm";
@@ -104,7 +105,17 @@ class QZCompanionGarminView extends WatchUi.View {
             string_HR = "---bpm";
         }
 
+        if( sensor_info.cadence != null )
+        {
+            string_FOOTCAD = foot_cad.toString() + "rpm";
+        }
+        else
+        {
+            string_FOOTCAD = "---rpm";
+        }
+
         _HR.setText("HR: " + string_HR);
+        _FOOTCAD.setText("STEP: " + string_FOOTCAD);
 
         WatchUi.requestUpdate();
     }
