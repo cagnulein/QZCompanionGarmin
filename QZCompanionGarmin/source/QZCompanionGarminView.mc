@@ -62,7 +62,7 @@ class QZCompanionGarminView extends WatchUi.View {
         var message = [
             {
                 0 => hr,
-                //1 => foot_cad,
+                1 => foot_cad,
             },
         ];
         $.log.verbose("Transmitting message.");
