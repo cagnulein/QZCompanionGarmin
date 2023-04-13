@@ -1,7 +1,7 @@
 import Toybox.Graphics;
 import Toybox.WatchUi;
 
-using Toybox.Graphics;
+using Toybox.Graphics as Gfx;
 using Toybox.Timer;
 using Toybox.ActivityMonitor as Act;
 using Toybox.Activity as Acty;
@@ -17,7 +17,7 @@ using Toybox.Communications;
 
 var log = new Log(LOG_LEVEL_VERBOSE);
 
-class QZCompanionGarminView extends Ui.DataField {
+class QZCompanionGarminView extends WatchUi.DataField {
 
     hidden var timer;
     private var _HR;
@@ -25,48 +25,12 @@ class QZCompanionGarminView extends Ui.DataField {
     private var _FOOTCAD;
     private var foot_cad;
     hidden var message = new Communications.PhoneAppMessage();
+    hidden var mHRZones = [120, 132, 145,158, 171];
 
     function initialize() {
         DataField.initialize();
     }
 
-    // Load your resources here
-    function onLayout(dc as Dc) as Void {
-        
-        var obscurityFlags = DataField.getObscurityFlags();
-
-        // Top left quadrant so we'll use the top left layout
-        if (obscurityFlags == (OBSCURE_TOP | OBSCURE_LEFT)) {
-            View.setLayout(Rez.Layouts.TopLeftLayout(dc));
-
-        // Top right quadrant so we'll use the top right layout
-        } else if (obscurityFlags == (OBSCURE_TOP | OBSCURE_RIGHT)) {
-            View.setLayout(Rez.Layouts.TopRightLayout(dc));
-
-        // Bottom left quadrant so we'll use the bottom left layout
-        } else if (obscurityFlags == (OBSCURE_BOTTOM | OBSCURE_LEFT)) {
-            View.setLayout(Rez.Layouts.BottomLeftLayout(dc));
-
-        // Bottom right quadrant so we'll use the bottom right layout
-        } else if (obscurityFlags == (OBSCURE_BOTTOM | OBSCURE_RIGHT)) {
-            View.setLayout(Rez.Layouts.BottomRightLayout(dc));
-
-        // Use the generic, centered layout
-        } else {
-            View.setLayout(Rez.Layouts.MainLayout(dc));
-            var labelView = View.findDrawableById("label");
-            labelView.locY = labelView.locY - 22;
-        	labelView.setJustification(Gfx.TEXT_JUSTIFY_RIGHT);
-        	labelView.setColor(Gfx.COLOR_BLACK);
-
-            var valueView = View.findDrawableById("value");
-            valueView.locY = valueView.locY + 0;
-            valueView.setFont(Gfx.FONT_NUMBER_MEDIUM);
-        }
-
-        View.findDrawableById("label").setText(Rez.Strings.label);
-        return true;
-    }
 
     function phoneMessageCallback(_message as Toybox.Communications.Message) as Void {
         $.log.info("Message received. Contents:");
@@ -124,32 +88,32 @@ class QZCompanionGarminView extends Ui.DataField {
     //! Display the value you computed here. This will be called
     //! once a second when the data field is visible.
     function onUpdate(dc) {
-        var bgColor = Gfx.COLOR_WHITE;
-        var fgColor = Gfx.COLOR_BLACK;
-        var profile = UserProfile.getProfile();
+        //var bgColor = Gfx.COLOR_WHITE;
+        //var fgColor = Gfx.COLOR_BLACK;
+        //var profile = UserProfile.getProfile();
 
-        if( profile != null ) {
+        /*if( profile != null ) {
 	        mHRZones = profile.getHeartRateZones(profile.getCurrentSport());
-	    }
+	    }*/
 
-
-        if( mHeartRate >= mHRZones[4])
+/*
+        if( hr >= mHRZones[4])
         { 
         	bgColor = Gfx.COLOR_RED;
         }
-        else if( mHeartRate >= mHRZones[3])
+        else if( hr >= mHRZones[3])
         {
 			bgColor = Gfx.COLOR_YELLOW;
         }
-        else if( mHeartRate >= mHRZones[2])
+        else if( hr >= mHRZones[2])
         {
         	bgColor = Gfx.COLOR_GREEN;
         }
-        else if( mHeartRate >= mHRZones[1])
+        else if( hr >= mHRZones[1])
         {
         	bgColor = Gfx.COLOR_BLUE;
         }
-        else if( mHeartRate >= mHRZones[0])
+        else if( hr >= mHRZones[0])
         {
         	bgColor = Gfx.COLOR_LT_GRAY;
         }
@@ -161,7 +125,7 @@ class QZCompanionGarminView extends Ui.DataField {
         var value = View.findDrawableById("value");
         value.setColor(fgColor);
 
-        value.setText(mHeartRate.format("%d"));
+        value.setText(hr.format("%d"));*/
 
         // Call parent's onUpdate(dc) to redraw the layout
         View.onUpdate(dc);
@@ -203,8 +167,8 @@ class QZCompanionGarminView extends Ui.DataField {
     }
 
     function tick() as Void {
-        var step = getCurrentWorkoutStep();
-        if(step) {
+        var step = Activity.getCurrentWorkoutStep();
+        if(step != null) {
             $.log.info("duration " + step.step.durationValue);
         }
         updateMessage();
