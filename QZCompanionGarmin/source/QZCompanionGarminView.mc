@@ -94,6 +94,10 @@ class QZCompanionGarminView extends WatchUi.View {
     function onSnsr(sensor_info as Toybox.Sensor.Info) as Void {
         var string_HR;
         var string_FOOTCAD;
+        var seconds_elapsed = (Activity.elapsedTime/1000);
+        var elapsed_s = seconds_elapsed % 60;
+        var elapsed_h = seconds_elapsed / 3600;
+        var elapsed_m = (seconds_elapsed / 60) - (elapsed_h * 60);        
         hr = sensor_info.heartRate;
         foot_cad = sensor_info.cadence;
         if( sensor_info.heartRate != null )
@@ -116,6 +120,7 @@ class QZCompanionGarminView extends WatchUi.View {
 
         _HR.setText("HR: " + string_HR);
         _FOOTCAD.setText("STEP: " + string_FOOTCAD);
+        _ELAPSED.setText(elapsed_h.format("%02d") + elapsed_m.format("%02d") + elapsed_s.format("%02d") );
 
         WatchUi.requestUpdate();
     }
