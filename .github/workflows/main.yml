@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: fix test
-        run: find ./ -name 'manifest.xml' -exec sed -i '' 's/edge530/fenix7/g' {} \; cat manifest.xml                   
+        run: find ./ -name 'manifest.xml' -exec sed -i '' 's/edge530/fenix7/g' {} \;            
     
       - uses: actions/checkout@v3
       - name: Test application
