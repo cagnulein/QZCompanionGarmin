@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: fix test
-        run: find ./ -name 'manifest.xml' -exec sed -i '' 's/<iq:product id="edge530"/>//g' {} \;                    
+        run: find ./ -name 'manifest.xml' -exec sed -i '' 's/<iq:product id="edge530"\/>//g' {} \;                    
     
       - uses: actions/checkout@v3
       - name: Test application
