@@ -5,10 +5,11 @@ permissions:
 
 # this will be executed on every push on a branch (hence on every commit), but not when pushing a tag
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - master
-      - dev
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   test:
