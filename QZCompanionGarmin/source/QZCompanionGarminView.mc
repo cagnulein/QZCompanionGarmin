@@ -203,6 +203,10 @@ class QZCompanionGarminView extends Ui.DataField {
     }
 
     function tick() as Void {
+        var step = getCurrentWorkoutStep();
+        if(step) {
+            $.log.info("duration " + step.step.durationValue);
+        }
         updateMessage();
     }
 }
