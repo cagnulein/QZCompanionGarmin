@@ -24,6 +24,7 @@ class QZCompanionGarminView extends WatchUi.View {
     private var hr;
     private var _FOOTCAD;
     private var foot_cad;
+    private var _ELAPSED;
     hidden var message = new Communications.PhoneAppMessage();
 
     function initialize() {
@@ -35,6 +36,7 @@ class QZCompanionGarminView extends WatchUi.View {
         setLayout(Rez.Layouts.MainLayout(dc));
         _HR = findDrawableById("HR");
         _FOOTCAD = findDrawableById("FOOTCAD");
+        _ELAPSED = findDrawableById("ELAPSED");
     }
 
     function phoneMessageCallback(_message as Toybox.Communications.Message) as Void {
@@ -94,6 +96,14 @@ class QZCompanionGarminView extends WatchUi.View {
     function onSnsr(sensor_info as Toybox.Sensor.Info) as Void {
         var string_HR;
         var string_FOOTCAD;
+        var info = Activity.getActivityInfo();
+        if(info != null) {
+            var seconds_elapsed = (info.elapsedTime/1000);
+            var elapsed_s = seconds_elapsed % 60;
+            var elapsed_h = seconds_elapsed / 3600;
+            var elapsed_m = (seconds_elapsed / 60) - (elapsed_h * 60); 
+            _ELAPSED.setText(elapsed_h.format("%02d") + ":" + elapsed_m.format("%02d") + ":" + elapsed_s.format("%02d") );      
+        } 
         hr = sensor_info.heartRate;
         foot_cad = sensor_info.cadence;
         if( sensor_info.heartRate != null )
@@ -116,6 +126,7 @@ class QZCompanionGarminView extends WatchUi.View {
 
         _HR.setText("HR: " + string_HR);
         _FOOTCAD.setText("STEP: " + string_FOOTCAD);
+        
 
         WatchUi.requestUpdate();
     }
