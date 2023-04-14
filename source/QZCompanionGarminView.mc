@@ -12,6 +12,7 @@ using Toybox.Time.Gregorian;
 using Toybox.Sensor;
 using Toybox.Application;
 using Toybox.Position;
+using Toybox.AntPlus;
 
 using Toybox.Communications;
 
@@ -26,6 +27,9 @@ class QZCompanionGarminView extends WatchUi.View {
     private var foot_cad;
     private var _ELAPSED;
     hidden var message = new Communications.PhoneAppMessage();
+    
+    var runningDynamics;
+    var listener;
 
     function initialize() {
         View.initialize();
@@ -55,6 +59,11 @@ class QZCompanionGarminView extends WatchUi.View {
         timer = new Timer.Timer();
 		timer.start(method(:tick), 1000, true);
         Communications.registerForPhoneAppMessages(method(:phoneMessageCallback));
+
+        listener = new MyRunningDynamicsListener();
+
+        // Initialize the AntPlus.BikeCadence object with a listener
+        runningDynamics = new AntPlus.RunningDynamics(listener);
     }
 
     function updateMessage() as Void {
@@ -105,7 +114,7 @@ class QZCompanionGarminView extends WatchUi.View {
             _ELAPSED.setText(elapsed_h.format("%02d") + ":" + elapsed_m.format("%02d") + ":" + elapsed_s.format("%02d") );      
         } 
         hr = sensor_info.heartRate;
-        foot_cad = sensor_info.cadence;
+        foot_cad = listener.stepLength;
         if( sensor_info.heartRate != null )
         {
             string_HR = hr.toString() + "bpm";
@@ -132,6 +141,6 @@ class QZCompanionGarminView extends WatchUi.View {
     }
 
     function tick() as Void {
-        updateMessage();
+        //updateMessage();
     }
 }

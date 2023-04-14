@@ -1,3 +1,10 @@
 
 developer_key
 QZCompanionGarmin/QZCompanionGarmin.iq
+*.mcgen
+*.mbc
+*.mir
+*.prg
+*.iq
+bin/QZCompanionGarmin.prg.debug.xml
+QZCompanionGarmin.prg.debug.xml
