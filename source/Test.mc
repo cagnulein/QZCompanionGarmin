@@ -1,4 +1,5 @@
 import Toybox.Test;
+import Toybox.Lang;
 
 // Unit test to check if 2 + 2 == 4
 (:test)
