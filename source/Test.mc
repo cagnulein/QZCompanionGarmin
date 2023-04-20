@@ -1,5 +1,6 @@
 import Toybox.Test;
 
+(:test)
 function onShow() {
   var x = 1;
   var y = 1;
