@@ -1,9 +1,8 @@
 import Toybox.Test;
 
+// Unit test to check if 2 + 2 == 4
 (:test)
-function onShow() {
-  var x = 1;
-  var y = 1;
-  // Prints an error to the console when x and y are equal
-  Test.assertNotEqualMessage(x, y, "x and y are equal!");
+function myUnitTest(logger as Logger) as Boolean {
+  var x = 2 + 2; logger.debug("x = " + x);
+  return (x == 4); // returning true indicates pass, false indicates failure
 }
