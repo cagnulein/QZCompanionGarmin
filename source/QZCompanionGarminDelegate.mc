@@ -34,7 +34,6 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
                 session.start();                                     // call start session
             }
             else if ((session != null) && session.isRecording()) {
-                session.stop();                                      // stop the session
                 session.discard();                                   // discard the session
                 session = null;                                      // set session control variable to null
             }
