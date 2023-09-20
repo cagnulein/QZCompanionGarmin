@@ -14,7 +14,7 @@
             "Monkey C: Edit Products" - Lets you add or remove any product
         -->
         <iq:products>
-            <iq:product id="vivolife"/>
+            <!--iq:product id="vivolife"/-->
 <iq:product id="vivoactive_hr"/>
 <iq:product id="vivoactive4s"/>
 <iq:product id="vivoactive3mlte"/>
@@ -40,7 +40,6 @@
 <iq:product id="legacysagarey"/>
 <iq:product id="oregon7xx"/>
 <iq:product id="montana7xx"/>
-<iq:product id="garminswim2"/>
 <iq:product id="gpsmap86"/>
 <iq:product id="gpsmap66"/>
 <iq:product id="fr945"/>
@@ -51,7 +50,6 @@
 <iq:product id="fr645m"/>
 <iq:product id="fr645"/>
 <iq:product id="fr630"/>
-<iq:product id="fr45"/>
 <iq:product id="fr245m"/>
 <iq:product id="fr245"/>
 <iq:product id="fr235"/>
@@ -64,8 +62,7 @@
 <iq:product id="edge530"/>
 <iq:product id="edge520plus"/>
 <iq:product id="edge_520"/>
-<iq:product id="edge130plus"/>
-<iq:product id="edge130"/>
+<!--iq:product id="edge130"/-->
 <iq:product id="edge1030plus"/>
 <iq:product id="edge1030bontrager"/>
 <iq:product id="edge1030"/>
@@ -105,6 +102,8 @@
 <iq:product id="venusq2m"/>
 <iq:product id="venusq2"/>
 <iq:product id="venu2s"/>
+<iq:product id="venu3s"/>
+<iq:product id="venu3"/>
 <iq:product id="venu2plus"/>
 <iq:product id="venu2"/>
 <iq:product id="marqgolfer"/>
