@@ -1,0 +1,4 @@
+<menu id="MainMenu" title="@Strings.MainMenuTitle">
+    <menu-item id="Start" label="@Strings.Start" />
+    <menu-item id="Quit" label="@Strings.Quit" />
+</menu>

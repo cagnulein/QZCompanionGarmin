@@ -1,0 +1,5 @@
+<menu id="StopActivity" title="@Strings.AppName">
+    <menu-item id="Resume" label="@Strings.Resume" />
+    <menu-item id="Save" label="@Strings.Save" />
+    <menu-item id="Discard" label="@Strings.Discard" />
+</menu>
