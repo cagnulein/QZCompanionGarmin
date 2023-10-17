@@ -1,10 +1,16 @@
 <layout id="MainLayout">
-    <label x="center" y="5" text="HR:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="HR" />
-    <label x="center" y="45" text="STEP:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="FOOTCAD" />
-    <label x="center" y="85" text="0:00:00" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="ELAPSED" />
+    <bitmap x="32%" y="5%" filename="../drawables/HR_icon.png" id="HR_Icon"/>
+    <label x="58%" y="7%" text="--" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="Hr" font="Graphics.FONT_MEDIUM"/>
+    <label x="50%" y="20%" text="TIMER" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="ElapsedLabel" font="Graphics.FONT_SMALL" />
+    <label x="50%" y="30%" text="0:00:00" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="Elapsed" font="Graphics.FONT_MEDIUM"/>
+    <label x="25%" y="45%" text="DIST" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="DistanceLabel" font="Graphics.FONT_SMALL"/>
+    <label x="25%" y="55%" text="-.--" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="Distance" font="Graphics.FONT_LARGE"/>
+    <label x="75%" y="45%" text="PACE" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="PaceLabel" font="Graphics.FONT_SMALL"/>
+    <label x="75%" y="55%" text="-:--" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="Pace" font="Graphics.FONT_MEDIUM"/>
+    <label x="50%" y="70%" text="ZONE" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="ZoneLabel" font="Graphics.FONT_SMALL"/>
+    <label x="50%" y="80%" text="--" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="Zone" font="Graphics.FONT_MEDIUM"/>
     <!--label x="center" y="5" text="RES:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="RESISTANCE" />
     <label x="center" y="5" text="P.RES:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="PELOTON_RESISTANCE" />
     <label x="center" y="5" text="WATT:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="WATT" />
-    <label x="center" y="5" text="SPEED:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="SPEED" />
     <label x="center" y="5" text="CADENCE:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="CADENCE" /-->
 </layout>

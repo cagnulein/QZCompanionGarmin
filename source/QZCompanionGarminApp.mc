@@ -19,7 +19,7 @@ class QZCompanionGarminApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as Array<Views or InputDelegates>? {
-        return [ new QZCompanionGarminView(), new QZCompanionGarminDelegate() ] as Array<Views or InputDelegates>;
+        return [ new Rez.Menus.MainMenu(), new QZCompanionGarminMainMenuDelegate() ] as Array<Views or InputDelegates>;
     }
 }
 

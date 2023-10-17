@@ -1,8 +1,12 @@
 <strings>
-    <string id="AppName">QZ Companion</string>
+    <string id="AppName">QZ Companion App</string>
 
-    <string id="prompt">Click the menu button</string>
+    <string id="StopActivityTitle">Stop Activity?</string>
+    <string id="Save">Save</string>
+    <string id="Resume">Resume</string>
+    <string id="Discard">Discard</string>
 
-    <string id="menu_label_1">Item 1</string>
-    <string id="menu_label_2">Item 2</string>
+    <string id="MainMenuTitle">QZ</string>
+    <string id="Start">Start Activity</string>
+    <string id="Quit">Quit</string>
 </strings>
