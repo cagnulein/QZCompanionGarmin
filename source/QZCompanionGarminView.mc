@@ -25,6 +25,7 @@ class QZCompanionGarminView extends WatchUi.View {
     private var _FOOTCAD;
     private var foot_cad;
     private var _ELAPSED;
+    private var _INFO;
     hidden var message = new Communications.PhoneAppMessage();
 
     function initialize() {
@@ -37,6 +38,7 @@ class QZCompanionGarminView extends WatchUi.View {
         _HR = findDrawableById("HR");
         _FOOTCAD = findDrawableById("FOOTCAD");
         _ELAPSED = findDrawableById("ELAPSED");
+        _INFO = findDrawableById("INFO");
     }
 
     function phoneMessageCallback(_message as Toybox.Communications.Message) as Void {
@@ -49,7 +51,7 @@ class QZCompanionGarminView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
-        Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
+        Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
         Sensor.enableSensorEvents(method(:onSnsr));
 
         timer = new Timer.Timer();
@@ -109,10 +111,12 @@ class QZCompanionGarminView extends WatchUi.View {
         if( sensor_info.heartRate != null )
         {
             string_HR = hr.toString() + "bpm";
+            _INFO.setText("");
         }
         else
         {
             string_HR = "---bpm";
+            _INFO.setText("press start");
         }
 
         if( sensor_info.cadence != null )

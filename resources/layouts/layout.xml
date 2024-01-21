@@ -2,6 +2,7 @@
     <label x="center" y="5" text="HR:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="HR" />
     <label x="center" y="45" text="STEP:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="FOOTCAD" />
     <label x="center" y="85" text="0:00:00" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="ELAPSED" />
+    <label x="center" y="125" text="press start" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="INFO" />
     <!--label x="center" y="5" text="RES:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="RESISTANCE" />
     <label x="center" y="5" text="P.RES:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="PELOTON_RESISTANCE" />
     <label x="center" y="5" text="WATT:" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" id="WATT" />
