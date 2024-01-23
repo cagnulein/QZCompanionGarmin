@@ -1,0 +1,48 @@
+import Toybox.Lang;
+using Toybox.WatchUi;
+using Toybox.WatchUi as Ui;
+using Toybox.Graphics;
+using Toybox.Graphics as Gfx;
+
+module Rez {
+    module Drawables {
+        (:initialized) var LauncherIcon as Symbol;
+    } // Drawables
+
+    module Fonts {
+    } // Fonts
+
+    module JsonData {
+    } // JsonData
+
+    module Layouts {
+        function MainLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
+            var rez_cmp_local_text_HR = new WatchUi.Text({:identifier=>"HR", :color=>Graphics.COLOR_WHITE, :locX=>(390 * 0.5), :locY=>5, :text=>"HR:", :justification=>Graphics.TEXT_JUSTIFY_CENTER, :font=>Graphics.FONT_MEDIUM});
+
+            var rez_cmp_local_text_FOOTCAD = new WatchUi.Text({:identifier=>"FOOTCAD", :color=>Graphics.COLOR_WHITE, :locX=>(390 * 0.5), :locY=>45, :text=>"STEP:", :justification=>Graphics.TEXT_JUSTIFY_CENTER, :font=>Graphics.FONT_MEDIUM});
+
+            var rez_cmp_local_text_ELAPSED = new WatchUi.Text({:identifier=>"ELAPSED", :color=>Graphics.COLOR_WHITE, :locX=>(390 * 0.5), :locY=>85, :text=>"0:00:00", :justification=>Graphics.TEXT_JUSTIFY_CENTER, :font=>Graphics.FONT_MEDIUM});
+
+            var rez_cmp_local_text_INFO = new WatchUi.Text({:identifier=>"INFO", :color=>Graphics.COLOR_WHITE, :locX=>(390 * 0.5), :locY=>125, :text=>"press start", :justification=>Graphics.TEXT_JUSTIFY_CENTER, :font=>Graphics.FONT_MEDIUM});
+
+            return [rez_cmp_local_text_HR, rez_cmp_local_text_FOOTCAD, rez_cmp_local_text_ELAPSED, rez_cmp_local_text_INFO] as Array<WatchUi.Drawable>;
+        }
+    } // Layouts
+
+    module Menus {
+        class MainMenu extends WatchUi.Menu {
+            function initialize() {
+                Menu.initialize();
+                addItem((WatchUi.loadResource($.Rez.Strings.menu_label_1) as String), :item_1);
+                addItem((WatchUi.loadResource($.Rez.Strings.menu_label_2) as String), :item_2);
+            }
+        }
+    } // Menus
+
+    module Strings {
+        (:initialized) var menu_label_1 as Symbol;
+        (:initialized) var menu_label_2 as Symbol;
+        (:initialized) var prompt as Symbol;
+        (:initialized) var AppName as Symbol;
+    } // Strings
+} // Rez
