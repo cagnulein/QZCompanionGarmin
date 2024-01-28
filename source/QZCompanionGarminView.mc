@@ -51,7 +51,16 @@ class QZCompanionGarminView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
-        Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
+        var deviceSettings = System.getDeviceSettings().monkeyVersion;
+
+        // Now you can use apiLevel as needed
+        System.println("API Level: " + deviceSettings);
+
+        if((deviceSettings[0] == 3 && deviceSettings[1] >= 2) || deviceSettings[0] > 3) {
+            Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
+        } else {
+            Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
+        }
         Sensor.enableSensorEvents(method(:onSnsr));
 
         timer = new Timer.Timer();
