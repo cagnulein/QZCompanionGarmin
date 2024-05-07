@@ -15,7 +15,7 @@ using Toybox.Position;
 
 using Toybox.Communications;
 
-var log = new Log(LOG_LEVEL_VERBOSE);
+//var log = new Log(LOG_LEVEL_VERBOSE);
 
 class QZCompanionGarminView extends WatchUi.View {
 
@@ -42,9 +42,9 @@ class QZCompanionGarminView extends WatchUi.View {
     }
 
     function phoneMessageCallback(_message as Toybox.Communications.Message) as Void {
-        $.log.info("Message received. Contents:");
+        //$.log.info("Message received. Contents:");
         message = _message.data;
-        $.log.info(message);
+        //$.log.info(message);
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -69,7 +69,7 @@ class QZCompanionGarminView extends WatchUi.View {
     }
 
     function updateMessage() as Void {
-        $.log.verbose("Updating message.");
+        //$.log.verbose("Updating message.");
 
 		// standard dictionary
         var message = [
@@ -78,18 +78,18 @@ class QZCompanionGarminView extends WatchUi.View {
                 1 => foot_cad,
             },
         ];
-        $.log.verbose("Transmitting message.");
+        //$.log.verbose("Transmitting message.");
         Communications.transmit(message, null, new CommsRelay(method(:onTransmitComplete)));
-        $.log.verbose("Message transmitted.");
+        //$.log.verbose("Message transmitted.");
     }
 
     // If you're debugging a problem with connecting/transmitting message, consult `README.md`.
-    function onTransmitComplete(isSuccess) {
+    function onTransmitComplete(isSuccess) {/*
         if (isSuccess) {
             $.log.info("Message sent successfully.");
         } else {
             $.log.error("Message failed to send.");
-        }
+        }*/
     }
 
     // Update the view
@@ -121,7 +121,7 @@ class QZCompanionGarminView extends WatchUi.View {
         {
             string_HR = hr.toString() + "bpm";
             _INFO.setText("");
-        }
+         }
         else
         {
             string_HR = "---bpm";
