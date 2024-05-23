@@ -115,10 +115,11 @@ class QZCompanionGarminView extends WatchUi.View {
             var elapsed_m = (seconds_elapsed / 60) - (elapsed_h * 60); 
             _ELAPSED.setText(elapsed_h.format("%02d") + ":" + elapsed_m.format("%02d") + ":" + elapsed_s.format("%02d") );      
         } 
-        hr = sensor_info.heartRate;
-        foot_cad = sensor_info.cadence;
+        
+        
         if( sensor_info.heartRate != null )
         {
+						hr = sensor_info.heartRate;
             string_HR = hr.toString() + "bpm";
             _INFO.setText("");
          }
@@ -130,6 +131,7 @@ class QZCompanionGarminView extends WatchUi.View {
 
         if( sensor_info.cadence != null )
         {
+						foot_cad = sensor_info.cadence;
             string_FOOTCAD = foot_cad.toString() + "rpm";
         }
         else
