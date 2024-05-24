@@ -119,7 +119,7 @@ class QZCompanionGarminView extends WatchUi.View {
         
         if( sensor_info.heartRate != null )
         {
-						hr = sensor_info.heartRate;
+			hr = sensor_info.heartRate;
             string_HR = hr.toString() + "bpm";
             _INFO.setText("");
          }
@@ -131,7 +131,7 @@ class QZCompanionGarminView extends WatchUi.View {
 
         if( sensor_info.cadence != null )
         {
-						foot_cad = sensor_info.cadence;
+			foot_cad = sensor_info.cadence;
             string_FOOTCAD = foot_cad.toString() + "rpm";
         }
         else
