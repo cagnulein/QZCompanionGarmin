@@ -1,3 +1,8 @@
 
 developer_key
 QZCompanionGarmin/QZCompanionGarmin.iq
+/bin
+/gen
+/mir
+QZCompanionGarmin.prg.debug.xml
+/internal-mir

@@ -30,6 +30,21 @@ class QZCompanionGarminView extends WatchUi.View {
 
     function initialize() {
         View.initialize();
+        var deviceSettings = System.getDeviceSettings().monkeyVersion;
+
+        // Now you can use apiLevel as needed
+        System.println("API Level: " + deviceSettings);
+
+        if((deviceSettings[0] == 3 && deviceSettings[1] >= 2) || deviceSettings[0] > 3) {
+            Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
+        } else {
+            Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
+        }
+        Sensor.enableSensorEvents(method(:onSnsr));
+
+        timer = new Timer.Timer();
+		timer.start(method(:tick), 1000, true);
+        Communications.registerForPhoneAppMessages(method(:phoneMessageCallback));        
     }
 
     // Load your resources here
@@ -51,21 +66,7 @@ class QZCompanionGarminView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() as Void {
-        var deviceSettings = System.getDeviceSettings().monkeyVersion;
 
-        // Now you can use apiLevel as needed
-        System.println("API Level: " + deviceSettings);
-
-        if((deviceSettings[0] == 3 && deviceSettings[1] >= 2) || deviceSettings[0] > 3) {
-            Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
-        } else {
-            Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
-        }
-        Sensor.enableSensorEvents(method(:onSnsr));
-
-        timer = new Timer.Timer();
-		timer.start(method(:tick), 1000, true);
-        Communications.registerForPhoneAppMessages(method(:phoneMessageCallback));
     }
 
     function updateMessage() as Void {
@@ -107,6 +108,11 @@ class QZCompanionGarminView extends WatchUi.View {
     function onSnsr(sensor_info as Toybox.Sensor.Info) as Void {
         var string_HR;
         var string_FOOTCAD;
+
+        if(_INFO == null) {
+            return;
+        }
+
         var info = Activity.getActivityInfo();
         if(info != null) {
             var seconds_elapsed = (info.elapsedTime/1000);
