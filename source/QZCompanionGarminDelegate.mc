@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 using Toybox.ActivityRecording;
+import Toybox.System;
 
 class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
 
@@ -41,4 +42,12 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
         return true;                                                 // return true for onSelect function
     }
 
+// Detect Menu button input
+    function onKey(keyEvent) {
+        if(keyEvent.getKey() == 4) {
+            onSelect(); // for Venu4
+        }
+        System.println(keyEvent); // e.g. KEY_MENU = 7
+        return true;
+    }
 }
