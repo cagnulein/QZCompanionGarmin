@@ -46,8 +46,9 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
     function onKey(keyEvent) {
         if(keyEvent.getKey() == 4) {
             onSelect(); // for Venu4
+            return true;
         }
         System.println(keyEvent); // e.g. KEY_MENU = 7
-        return true;
+        return false;
     }
 }
