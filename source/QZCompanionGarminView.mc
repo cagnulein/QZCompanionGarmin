@@ -154,5 +154,6 @@ class QZCompanionGarminView extends WatchUi.View {
 
     function tick() as Void {
         updateMessage();
+        WatchUi.requestUpdate();
     }
 }
