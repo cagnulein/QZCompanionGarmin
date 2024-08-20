@@ -26,6 +26,10 @@ class QZCompanionGarminView extends WatchUi.View {
     private var foot_cad;
     private var _ELAPSED;
     private var _INFO;
+    private var _POWER;
+    private var power = 0;
+    private var speed = 0;
+    public static var bike = false;    
     hidden var message = new Communications.PhoneAppMessage();
 
     function initialize() {
@@ -36,14 +40,14 @@ class QZCompanionGarminView extends WatchUi.View {
         System.println("API Level: " + deviceSettings);
 
         if((deviceSettings[0] == 3 && deviceSettings[1] >= 2) || deviceSettings[0] > 3) {
-            Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
+            Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_FOOTPOD, Sensor.SENSOR_BIKEPOWER, Sensor.SENSOR_BIKECADENCE, Sensor.SENSOR_BIKESPEED] );
         } else {
-            Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD] );
+            Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD, Sensor.SENSOR_BIKEPOWER, Sensor.SENSOR_BIKECADENCE, Sensor.SENSOR_BIKESPEED] );
         }
         Sensor.enableSensorEvents(method(:onSnsr));
 
         timer = new Timer.Timer();
-		timer.start(method(:tick), 1000, true);
+        timer.start(method(:tick), 1000, true);
         Communications.registerForPhoneAppMessages(method(:phoneMessageCallback));        
     }
 
@@ -54,6 +58,7 @@ class QZCompanionGarminView extends WatchUi.View {
         _FOOTCAD = findDrawableById("FOOTCAD");
         _ELAPSED = findDrawableById("ELAPSED");
         _INFO = findDrawableById("INFO");
+        _POWER = findDrawableById("POWER");
     }
 
     function phoneMessageCallback(_message as Toybox.Communications.Message) as Void {
@@ -72,11 +77,13 @@ class QZCompanionGarminView extends WatchUi.View {
     function updateMessage() as Void {
         //$.log.verbose("Updating message.");
 
-		// standard dictionary
+        // standard dictionary
         var message = [
             {
                 0 => hr,
                 1 => foot_cad,
+                2 => power,
+                3 => speed,
             },
         ];
         //$.log.verbose("Transmitting message.");
@@ -108,6 +115,7 @@ class QZCompanionGarminView extends WatchUi.View {
     function onSnsr(sensor_info as Toybox.Sensor.Info) as Void {
         var string_HR;
         var string_FOOTCAD;
+        var string_POWER;
 
         if(_INFO == null) {
             return;
@@ -119,13 +127,26 @@ class QZCompanionGarminView extends WatchUi.View {
             var elapsed_s = seconds_elapsed % 60;
             var elapsed_h = seconds_elapsed / 3600;
             var elapsed_m = (seconds_elapsed / 60) - (elapsed_h * 60); 
-            _ELAPSED.setText(elapsed_h.format("%02d") + ":" + elapsed_m.format("%02d") + ":" + elapsed_s.format("%02d") );      
+            _ELAPSED.setText(elapsed_h.format("%02d") + ":" + elapsed_m.format("%02d") + ":" + elapsed_s.format("%02d") );              
         } 
-        
+
+        if (info.currentSpeed != null) {
+            speed = info.currentSpeed;
+        }
+
+        if (info.currentPower != null) {            
+            power = info.currentPower;
+            if(power > 0) {
+                bike = true;
+            }
+            string_POWER = power.toString() + "W";
+        } else {
+            string_POWER = "---W";
+        }
         
         if( sensor_info.heartRate != null )
         {
-			hr = sensor_info.heartRate;
+            hr = sensor_info.heartRate;
             string_HR = hr.toString() + "bpm";
             _INFO.setText("");
          }
@@ -137,7 +158,7 @@ class QZCompanionGarminView extends WatchUi.View {
 
         if( sensor_info.cadence != null )
         {
-			foot_cad = sensor_info.cadence;
+            foot_cad = sensor_info.cadence;
             string_FOOTCAD = foot_cad.toString() + "rpm";
         }
         else
@@ -147,7 +168,7 @@ class QZCompanionGarminView extends WatchUi.View {
 
         _HR.setText("HR: " + string_HR);
         _FOOTCAD.setText("STEP: " + string_FOOTCAD);
-        
+        _POWER.setText("PWR: " + string_POWER);
 
         WatchUi.requestUpdate();
     }
