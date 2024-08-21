@@ -27,11 +27,19 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
     function onSelect() {
         if (Toybox has :ActivityRecording) {                         // check device for activity recording
             if ((session == null) || (session.isRecording() == false)) {
-                session = ActivityRecording.createSession({          // set up recording session
-                        :name=>"QZ Run",                              // set session name
-                        :sport=>Activity.SPORT_RUNNING,                // set sport type
-                        :subSport=>Activity.SUB_SPORT_INDOOR_RUNNING          // set sub sport type
-                });
+                if(QZCompanionGarminView.bike == false) {
+                    session = ActivityRecording.createSession({          // set up recording session
+                            :name=>"QZ Run",                              // set session name
+                            :sport=>Activity.SPORT_RUNNING,                // set sport type
+                            :subSport=>Activity.SUB_SPORT_INDOOR_RUNNING          // set sub sport type
+                    });
+                } else {
+                    session = ActivityRecording.createSession({          // set up recording session
+                            :name=>"QZ Ride",                              // set session name
+                            :sport=>Activity.SPORT_CYCLING,                // set sport type
+                            :subSport=>Activity.SUB_SPORT_INDOOR_CYCLING          // set sub sport type
+                    });
+                }
                 session.start();                                     // call start session
             }
             else if ((session != null) && session.isRecording()) {
