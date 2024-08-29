@@ -134,7 +134,7 @@ class QZCompanionGarminView extends WatchUi.View {
             speed = info.currentSpeed;
         }
 
-        if (info.currentPower != null) {            
+        if (info has :currentPower && info.currentPower != null) {            
             power = info.currentPower;
             if(power > 0) {
                 bike = true;
