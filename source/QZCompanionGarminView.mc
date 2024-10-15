@@ -61,7 +61,7 @@ class QZCompanionGarminView extends WatchUi.View {
         _POWER = findDrawableById("POWER");
     }
 
-    function phoneMessageCallback(_message as Toybox.Communications.Message) as Void {
+    function phoneMessageCallback(_message as Toybox.Communications.PhoneAppMessage) as Void {
         //$.log.info("Message received. Contents:");
         message = _message.data;
         //$.log.info(message);
