@@ -17,10 +17,16 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
     var session = null;                                             // set up session variable
 
     function onBack() {
-        if (Toybox has :ActivityRecording) {         
-            return false;
+        if (Toybox has :ActivityRecording) {
+            if ((session != null) && session.isRecording()) {
+                session.discard();                                   // discard the session
+                session = null;                                      // set session control variable to null
+                // and don't exit
+                return true;
+            }
         }
-        return true;
+        // now you can exit since the activity is discarded
+        return false;
     }
 
     // use the select Start/Stop or touch for recording
