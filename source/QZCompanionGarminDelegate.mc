@@ -37,13 +37,15 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
                     session = ActivityRecording.createSession({          // set up recording session
                             :name=>"QZ Run",                              // set session name
                             :sport=>Activity.SPORT_RUNNING,                // set sport type
-                            :subSport=>Activity.SUB_SPORT_INDOOR_RUNNING          // set sub sport type
+                            :subSport=>Activity.SUB_SPORT_INDOOR_RUNNING,          // set sub sport type
+                            :disableGps=>true                              // disable GPS to save battery
                     });
                 } else {
                     session = ActivityRecording.createSession({          // set up recording session
                             :name=>"QZ Ride",                              // set session name
                             :sport=>Activity.SPORT_CYCLING,                // set sport type
-                            :subSport=>Activity.SUB_SPORT_INDOOR_CYCLING          // set sub sport type
+                            :subSport=>Activity.SUB_SPORT_INDOOR_CYCLING,          // set sub sport type
+                            :disableGps=>true                              // disable GPS to save battery
                     });
                 }
                 session.start();                                     // call start session
