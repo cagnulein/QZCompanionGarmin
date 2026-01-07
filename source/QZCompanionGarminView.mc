@@ -39,6 +39,11 @@ class QZCompanionGarminView extends WatchUi.View {
         // Now you can use apiLevel as needed
         System.println("API Level: " + deviceSettings);
 
+        // Disable GPS to save battery (not needed for indoor activities)
+        if (Toybox has :Position) {
+            Position.enableLocationEvents(Position.LOCATION_DISABLE, null);
+        }
+
         if((deviceSettings[0] == 3 && deviceSettings[1] >= 2) || deviceSettings[0] > 3) {
             Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD, Sensor.SENSOR_BIKEPOWER, Sensor.SENSOR_BIKECADENCE, Sensor.SENSOR_BIKESPEED] );
         } else {
@@ -48,7 +53,7 @@ class QZCompanionGarminView extends WatchUi.View {
 
         timer = new Timer.Timer();
         timer.start(method(:tick), 1000, true);
-        Communications.registerForPhoneAppMessages(method(:phoneMessageCallback));        
+        Communications.registerForPhoneAppMessages(method(:phoneMessageCallback));
     }
 
     // Load your resources here
