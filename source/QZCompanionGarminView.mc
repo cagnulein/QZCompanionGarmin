@@ -113,9 +113,9 @@ class QZCompanionGarminView extends WatchUi.View {
     }
 
     function onSnsr(sensor_info as Toybox.Sensor.Info) as Void {
-        var string_HR as String;
-        var string_FOOTCAD as String;
-        var string_POWER as String;
+        var string_HR;
+        var string_FOOTCAD;
+        var string_POWER;
 
         if(_INFO == null) {
             return;

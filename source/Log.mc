@@ -11,7 +11,7 @@ enum {
 
 class Log {
     private var logLevel as Number?;
-    public function initialize(_logLevel as Number?) as Void {
+    public function initialize(_logLevel as Number?) {
         logLevel = _logLevel;
     }
 

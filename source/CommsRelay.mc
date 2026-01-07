@@ -4,7 +4,7 @@ using Toybox.Lang;
 class CommsRelay extends Comms.ConnectionListener {
     hidden var mCallback as Lang.Method;
 
-    function initialize(callback as Lang.Method) as Void {
+    function initialize(callback as Lang.Method) {
         ConnectionListener.initialize();
         mCallback = callback;
     }
