@@ -14,7 +14,7 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
         return true;
     }
 
-    var session = null;                                             // set up session variable
+    var session as ActivityRecording.Session?;                                             // set up session variable
 
     function onBack() {
         if (Toybox has :ActivityRecording) {
