@@ -1,18 +1,19 @@
 using Toybox.Communications as Comms;
+using Toybox.Lang;
 
 class CommsRelay extends Comms.ConnectionListener {
-    hidden var mCallback;
+    hidden var mCallback as Lang.Method;
 
-    function initialize(callback) {
+    function initialize(callback as Lang.Method) {
         ConnectionListener.initialize();
         mCallback = callback;
     }
 
-    function onComplete() {
+    function onComplete() as Void {
         mCallback.invoke(true);
     }
 
-    function onError() {
+    function onError() as Void {
         mCallback.invoke(false);
     }
 }

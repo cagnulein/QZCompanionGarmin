@@ -19,18 +19,18 @@ using Toybox.Communications;
 
 class QZCompanionGarminView extends WatchUi.View {
 
-    hidden var timer;
-    private var _HR;
-    private var hr;
-    private var _FOOTCAD;
-    private var foot_cad;
-    private var _ELAPSED;
-    private var _INFO;
-    private var _POWER;
-    private var power = 0;
-    private var speed = 0;
-    public static var bike = false;    
-    hidden var message = new Communications.PhoneAppMessage();
+    hidden var timer as Timer.Timer?;
+    private var _HR as WatchUi.Text?;
+    private var hr as Lang.Number?;
+    private var _FOOTCAD as WatchUi.Text?;
+    private var foot_cad as Lang.Number?;
+    private var _ELAPSED as WatchUi.Text?;
+    private var _INFO as WatchUi.Text?;
+    private var _POWER as WatchUi.Text?;
+    private var power as Lang.Number = 0;
+    private var speed as Lang.Float = 0;
+    public static var bike as Lang.Boolean = false;
+    hidden var message as Communications.PhoneAppMessage = new Communications.PhoneAppMessage();
 
     function initialize() {
         View.initialize();
@@ -80,19 +80,19 @@ class QZCompanionGarminView extends WatchUi.View {
         // standard dictionary
         var message = [
             {
-                0 => hr,
-                1 => foot_cad,
-                2 => power,
-                3 => speed,
-            },
-        ];
+                0 => hr as Lang.Number?,
+                1 => foot_cad as Lang.Number?,
+                2 => power as Lang.Number,
+                3 => speed as Lang.Float,
+            } as Lang.Dictionary<Lang.Number, Lang.Number or Lang.Float or Null>
+        ] as Lang.Array<Lang.Dictionary>;
         //$.log.verbose("Transmitting message.");
         Communications.transmit(message, null, new CommsRelay(method(:onTransmitComplete)));
         //$.log.verbose("Message transmitted.");
     }
 
     // If you're debugging a problem with connecting/transmitting message, consult `README.md`.
-    function onTransmitComplete(isSuccess) {/*
+    function onTransmitComplete(isSuccess as Lang.Boolean) as Void {/*
         if (isSuccess) {
             $.log.info("Message sent successfully.");
         } else {
@@ -123,23 +123,27 @@ class QZCompanionGarminView extends WatchUi.View {
 
         var info = Activity.getActivityInfo();
         if(info != null) {
-            var seconds_elapsed = (info.elapsedTime/1000);
-            var elapsed_s = seconds_elapsed % 60;
-            var elapsed_h = seconds_elapsed / 3600;
-            var elapsed_m = (seconds_elapsed / 60) - (elapsed_h * 60); 
-            _ELAPSED.setText(elapsed_h.format("%02d") + ":" + elapsed_m.format("%02d") + ":" + elapsed_s.format("%02d") );              
-        } 
-
-        if (info.currentSpeed != null) {
-            speed = info.currentSpeed;
-        }
-
-        if (info has :currentPower && info.currentPower != null) {            
-            power = info.currentPower;
-            if(power > 0) {
-                bike = true;
+            if(_ELAPSED != null) {
+                var seconds_elapsed = (info.elapsedTime/1000);
+                var elapsed_s = seconds_elapsed % 60;
+                var elapsed_h = seconds_elapsed / 3600;
+                var elapsed_m = (seconds_elapsed / 60) - (elapsed_h * 60);
+                _ELAPSED.setText(elapsed_h.format("%02d") + ":" + elapsed_m.format("%02d") + ":" + elapsed_s.format("%02d") );
             }
-            string_POWER = power.toString() + "W";
+
+            if (info.currentSpeed != null) {
+                speed = info.currentSpeed;
+            }
+
+            if (info has :currentPower && info.currentPower != null) {
+                power = info.currentPower;
+                if(power > 0) {
+                    bike = true;
+                }
+                string_POWER = power.toString() + "W";
+            } else {
+                string_POWER = "---W";
+            }
         } else {
             string_POWER = "---W";
         }
@@ -148,12 +152,16 @@ class QZCompanionGarminView extends WatchUi.View {
         {
             hr = sensor_info.heartRate;
             string_HR = hr.toString() + "bpm";
-            _INFO.setText("");
+            if(_INFO != null) {
+                _INFO.setText("");
+            }
          }
         else
         {
             string_HR = "---bpm";
-            _INFO.setText("press start");
+            if(_INFO != null) {
+                _INFO.setText("press start");
+            }
         }
 
         if( sensor_info.cadence != null )
@@ -166,9 +174,15 @@ class QZCompanionGarminView extends WatchUi.View {
             string_FOOTCAD = "---rpm";
         }
 
-        _HR.setText("HR: " + string_HR);
-        _FOOTCAD.setText("STEP: " + string_FOOTCAD);
-        _POWER.setText("PWR: " + string_POWER);
+        if(_HR != null) {
+            _HR.setText("HR: " + string_HR);
+        }
+        if(_FOOTCAD != null) {
+            _FOOTCAD.setText("STEP: " + string_FOOTCAD);
+        }
+        if(_POWER != null) {
+            _POWER.setText("PWR: " + string_POWER);
+        }
 
         WatchUi.requestUpdate();
     }
