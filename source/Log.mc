@@ -10,40 +10,40 @@ enum {
 }
 
 class Log {
-    private var logLevel as Number?;
-    public function initialize(_logLevel as Number?) {
+    private var logLevel as Lang.Number?;
+    public function initialize(_logLevel as Lang.Number?) {
         logLevel = _logLevel;
     }
 
-    public function verbose(message as Lang.Object or String or Null) as Void {
+    public function verbose(message as Lang.Object or Lang.String or Null) as Void {
         if (logLevel != null && logLevel <= LOG_LEVEL_VERBOSE) {
             System.print("VERBOSE: ");
             System.println(message);
         }
     }
 
-    public function debug(message as Lang.Object or String or Null) as Void {
+    public function debug(message as Lang.Object or Lang.String or Null) as Void {
         if (logLevel != null && logLevel <= LOG_LEVEL_DEBUG) {
             System.print("DEBUG: ");
             System.println(message);
         }
     }
 
-    public function info(message as Lang.Object or String or Null) as Void {
+    public function info(message as Lang.Object or Lang.String or Null) as Void {
         if (logLevel != null && logLevel <= LOG_LEVEL_INFO) {
             System.print("INFO: ");
             System.println(message);
         }
     }
 
-    public function warning(message as Lang.Object or String or Null) as Void {
+    public function warning(message as Lang.Object or Lang.String or Null) as Void {
         if (logLevel != null && logLevel <= LOG_LEVEL_WARNING) {
             System.print("WARNING: ");
             System.println(message);
         }
     }
 
-    public function error(message as Lang.Object or String or Null) as Void {
+    public function error(message as Lang.Object or Lang.String or Null) as Void {
         if (logLevel != null && logLevel <= LOG_LEVEL_ERROR) {
             System.print("ERROR: ");
             System.println(message);

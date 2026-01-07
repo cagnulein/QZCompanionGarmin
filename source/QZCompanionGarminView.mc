@@ -21,15 +21,15 @@ class QZCompanionGarminView extends WatchUi.View {
 
     hidden var timer as Timer.Timer?;
     private var _HR as WatchUi.Text?;
-    private var hr as Number?;
+    private var hr as Lang.Number?;
     private var _FOOTCAD as WatchUi.Text?;
-    private var foot_cad as Number?;
+    private var foot_cad as Lang.Number?;
     private var _ELAPSED as WatchUi.Text?;
     private var _INFO as WatchUi.Text?;
     private var _POWER as WatchUi.Text?;
-    private var power as Number = 0;
-    private var speed as Float = 0;
-    public static var bike as Boolean = false;
+    private var power as Lang.Number = 0;
+    private var speed as Lang.Float = 0;
+    public static var bike as Lang.Boolean = false;
     hidden var message as Communications.PhoneAppMessage = new Communications.PhoneAppMessage();
 
     function initialize() {
@@ -80,19 +80,19 @@ class QZCompanionGarminView extends WatchUi.View {
         // standard dictionary
         var message = [
             {
-                0 => hr as Number?,
-                1 => foot_cad as Number?,
-                2 => power as Number,
-                3 => speed as Float,
-            } as Dictionary<Number, Number or Float or Null>
-        ] as Array<Dictionary>;
+                0 => hr as Lang.Number?,
+                1 => foot_cad as Lang.Number?,
+                2 => power as Lang.Number,
+                3 => speed as Lang.Float,
+            } as Lang.Dictionary<Lang.Number, Lang.Number or Lang.Float or Null>
+        ] as Lang.Array<Lang.Dictionary>;
         //$.log.verbose("Transmitting message.");
         Communications.transmit(message, null, new CommsRelay(method(:onTransmitComplete)));
         //$.log.verbose("Message transmitted.");
     }
 
     // If you're debugging a problem with connecting/transmitting message, consult `README.md`.
-    function onTransmitComplete(isSuccess as Boolean) as Void {/*
+    function onTransmitComplete(isSuccess as Lang.Boolean) as Void {/*
         if (isSuccess) {
             $.log.info("Message sent successfully.");
         } else {
