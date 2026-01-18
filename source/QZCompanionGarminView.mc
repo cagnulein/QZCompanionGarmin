@@ -35,12 +35,20 @@ class QZCompanionGarminView extends WatchUi.View {
     function initialize() {
         View.initialize();
         var deviceSettings = System.getDeviceSettings().monkeyVersion;
+        var excludeExternalHR = Application.Properties.getValue("excludeExternalHR");
 
         // Now you can use apiLevel as needed
         System.println("API Level: " + deviceSettings);
+        System.println("Exclude External HR: " + excludeExternalHR);
 
         if((deviceSettings[0] == 3 && deviceSettings[1] >= 2) || deviceSettings[0] > 3) {
-            Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD, Sensor.SENSOR_BIKEPOWER, Sensor.SENSOR_BIKECADENCE, Sensor.SENSOR_BIKESPEED] );
+            if(excludeExternalHR) {
+                // Exclude external HR sensor (SENSOR_HEARTRATE), use only onboard
+                Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_FOOTPOD, Sensor.SENSOR_BIKEPOWER, Sensor.SENSOR_BIKECADENCE, Sensor.SENSOR_BIKESPEED] );
+            } else {
+                // Include both onboard and external HR sensors
+                Sensor.setEnabledSensors( [Sensor.SENSOR_ONBOARD_HEARTRATE, Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD, Sensor.SENSOR_BIKEPOWER, Sensor.SENSOR_BIKECADENCE, Sensor.SENSOR_BIKESPEED] );
+            }
         } else {
             Sensor.setEnabledSensors( [Sensor.SENSOR_HEARTRATE, Sensor.SENSOR_FOOTPOD, Sensor.SENSOR_BIKEPOWER, Sensor.SENSOR_BIKECADENCE, Sensor.SENSOR_BIKESPEED] );
         }
@@ -48,7 +56,7 @@ class QZCompanionGarminView extends WatchUi.View {
 
         timer = new Timer.Timer();
         timer.start(method(:tick), 1000, true);
-        Communications.registerForPhoneAppMessages(method(:phoneMessageCallback));        
+        Communications.registerForPhoneAppMessages(method(:phoneMessageCallback));
     }
 
     // Load your resources here
