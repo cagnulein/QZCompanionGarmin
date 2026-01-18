@@ -5,4 +5,8 @@
 
     <string id="menu_label_1">Item 1</string>
     <string id="menu_label_2">Item 2</string>
+
+    <string id="settingsTitle">Settings</string>
+    <string id="excludeExternalHRTitle">Exclude External HR</string>
+    <string id="excludeExternalHRDescription">Disable external heart rate sensor (SENSOR_HEARTRATE) and use only onboard sensor for SDK 3.2+</string>
 </strings>

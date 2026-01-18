@@ -1,0 +1,5 @@
+<settings>
+    <setting propertyKey="@Properties.excludeExternalHR" title="@Strings.excludeExternalHRTitle">
+        <settingConfig type="boolean" />
+    </setting>
+</settings>
