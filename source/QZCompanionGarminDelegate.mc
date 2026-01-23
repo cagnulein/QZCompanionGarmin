@@ -19,6 +19,7 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
     function onBack() {
         if (Toybox has :ActivityRecording) {
             if ((session != null) && session.isRecording()) {
+                session.stop();                                      // stop the session first
                 session.discard();                                   // discard the session
                 session = null;                                      // set session control variable to null
                 // and don't exit
@@ -49,6 +50,7 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
                 session.start();                                     // call start session
             }
             else if ((session != null) && session.isRecording()) {
+                session.stop();                                      // stop the session first
                 session.discard();                                   // discard the session
                 session = null;                                      // set session control variable to null
             }
