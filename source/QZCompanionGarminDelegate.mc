@@ -60,11 +60,30 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
 
 // Detect Menu button input
     function onKey(keyEvent) {
-        if(keyEvent.getKey() == 4) {
+        var key = keyEvent.getKey();
+        System.println("Key pressed: " + key); // Log all key presses for debugging
+
+        if(key == 4) {
             onSelect(); // for Venu4
             return true;
         }
-        System.println(keyEvent); // e.g. KEY_MENU = 7
+
+        // KEY_LAP (key 13) or other device-specific lap buttons
+        // On some devices like FR965, the lap/back button may generate a key event
+        // that needs to be handled to prevent automatic activity saving
+        if(key == 13 || key == 1) { // KEY_LAP = 13, KEY_ESC = 1 (potential back button)
+            // If there's an active recording, stop and discard it
+            if (Toybox has :ActivityRecording) {
+                if ((session != null) && session.isRecording()) {
+                    session.stop();                                      // stop the session first
+                    session.discard();                                   // discard the session
+                    session = null;                                      // set session control variable to null
+                    System.println("Activity discarded via lap/back key: " + key);
+                    return true; // Event handled, prevent default behavior
+                }
+            }
+        }
+
         return false;
     }
 }
