@@ -16,6 +16,36 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
 
     var session = null;                                             // set up session variable
 
+    function createRecordingSession() {
+        var sessionOptions = {
+            :name => "QZ Activity"
+        };
+
+        if (QZCompanionGarminView.bike == false) {
+            sessionOptions[:name] = "QZ Run";
+
+            if (Toybox has :Activity && Activity has :SPORT_RUNNING) {
+                sessionOptions[:sport] = Activity.SPORT_RUNNING;
+            }
+
+            if (Toybox has :Activity && Activity has :SUB_SPORT_INDOOR_RUNNING) {
+                sessionOptions[:subSport] = Activity.SUB_SPORT_INDOOR_RUNNING;
+            }
+        } else {
+            sessionOptions[:name] = "QZ Ride";
+
+            if (Toybox has :Activity && Activity has :SPORT_CYCLING) {
+                sessionOptions[:sport] = Activity.SPORT_CYCLING;
+            }
+
+            if (Toybox has :Activity && Activity has :SUB_SPORT_INDOOR_CYCLING) {
+                sessionOptions[:subSport] = Activity.SUB_SPORT_INDOOR_CYCLING;
+            }
+        }
+
+        return ActivityRecording.createSession(sessionOptions);
+    }
+
     function onBack() {
         if (Toybox has :ActivityRecording) {
             if ((session != null) && session.isRecording()) {
@@ -33,19 +63,7 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
     function onSelect() {
         if (Toybox has :ActivityRecording) {                         // check device for activity recording
             if ((session == null) || (session.isRecording() == false)) {
-                if(QZCompanionGarminView.bike == false) {
-                    session = ActivityRecording.createSession({          // set up recording session
-                            :name=>"QZ Run",                              // set session name
-                            :sport=>Activity.SPORT_RUNNING,                // set sport type
-                            :subSport=>Activity.SUB_SPORT_INDOOR_RUNNING          // set sub sport type
-                    });
-                } else {
-                    session = ActivityRecording.createSession({          // set up recording session
-                            :name=>"QZ Ride",                              // set session name
-                            :sport=>Activity.SPORT_CYCLING,                // set sport type
-                            :subSport=>Activity.SUB_SPORT_INDOOR_CYCLING          // set sub sport type
-                    });
-                }
+                session = createRecordingSession();
                 session.start();                                     // call start session
             }
             else if ((session != null) && session.isRecording()) {
@@ -63,6 +81,6 @@ class QZCompanionGarminDelegate extends WatchUi.BehaviorDelegate {
             return true;
         }
         System.println(keyEvent); // e.g. KEY_MENU = 7
-        return false;
+            return false;
     }
 }
